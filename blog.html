@@ -84,9 +84,22 @@
   <!-- Required before ES modules: supabase-config.js uses window.supabase.createClient from this bundle (same as index.html). -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module">
-    import { fetchAllPosts, fetchPostBySlug } from './js/blog-api.js';
+    import { fetchAllPosts } from './js/blog-api.js';
 
     let allPosts = [];
+
+    if (typeof marked !== 'undefined') {
+      marked.setOptions({ gfm: true, breaks: true });
+    }
+
+    function escapeHtml(str) {
+      if (str == null || str === '') return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
     // Theme toggle functionality
     (function() {
@@ -157,14 +170,21 @@
           <h3 class="blog-card-title">${post.title}</h3>
           <p class="blog-card-excerpt">${post.excerpt}</p>
           <div class="blog-card-meta">
-            <div class="blog-card-date">
-              <i class="fas fa-calendar"></i>
-              <span>${new Date(post.published_at).toLocaleDateString()}</span>
+            <div class="blog-card-meta-primary">
+              <div class="blog-card-date">
+                <i class="fas fa-calendar"></i>
+                <span>${new Date(post.published_at).toLocaleDateString()}</span>
+              </div>
+              <div class="blog-card-read-time">
+                <i class="fas fa-clock"></i>
+                <span>${post.read_time || '—'}</span>
+              </div>
             </div>
-            <div class="blog-card-read-time">
-              <i class="fas fa-clock"></i>
-              <span>${post.read_time}</span>
-            </div>
+            ${post.author_name ? `
+              <div class="blog-card-author" title="Writer">
+                <i class="fas fa-pen-nib" aria-hidden="true"></i>
+                <span>${escapeHtml(post.author_name)}</span>
+              </div>` : ''}
           </div>
         </div>
       `;
@@ -220,15 +240,21 @@
           <div class="blog-modal-header">
             <span class="blog-genre ${post.genre}">${post.genre}</span>
             <h1 class="blog-card-title" style="margin: 1rem 0 0.5rem 0;">${post.title}</h1>
-            <div class="blog-card-meta" style="margin-top: 1rem;">
-              <div class="blog-card-date">
-                <i class="fas fa-calendar"></i>
-                <span>${new Date(post.published_at).toLocaleDateString()}</span>
+            <div class="blog-modal-meta-row">
+              <div class="blog-card-meta" style="margin-top: 0;">
+                <div class="blog-card-meta-primary">
+                  <div class="blog-card-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>${new Date(post.published_at).toLocaleDateString()}</span>
+                  </div>
+                  <div class="blog-card-read-time">
+                    <i class="fas fa-clock"></i>
+                    <span>${post.read_time || '—'}</span>
+                  </div>
+                </div>
               </div>
-              <div class="blog-card-read-time">
-                <i class="fas fa-clock"></i>
-                <span>${post.read_time}</span>
-              </div>
+              ${post.author_name ? `
+                <p class="blog-modal-byline"><span class="blog-modal-byline-label">By</span> ${escapeHtml(post.author_name)}</p>` : ''}
             </div>
           </div>
           <div class="blog-modal-body">

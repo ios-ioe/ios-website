@@ -10,6 +10,110 @@ import { getCurrentUser } from './auth.js';
 // State
 let currentPostId = null;
 
+function escapeHtml(str) {
+    if (str == null || str === '') return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function configureMarked() {
+    if (typeof marked === 'undefined') return;
+    marked.setOptions({
+        gfm: true,
+        breaks: true
+    });
+}
+
+configureMarked();
+
+function insertRaw(textarea, text) {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const v = textarea.value;
+    textarea.value = `${v.slice(0, start)}${text}${v.slice(end)}`;
+    const pos = start + text.length;
+    textarea.focus();
+    textarea.setSelectionRange(pos, pos);
+}
+
+function wrapSelection(textarea, open, close, emptyPlaceholder) {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const v = textarea.value;
+    let sel = v.slice(start, end);
+    const hadSelection = sel.length > 0;
+    if (!hadSelection) sel = emptyPlaceholder;
+    const inserted = `${open}${sel}${close}`;
+    textarea.value = `${v.slice(0, start)}${inserted}${v.slice(end)}`;
+    textarea.focus();
+    const innerStart = start + open.length;
+    const innerEnd = innerStart + sel.length;
+    textarea.setSelectionRange(innerStart, innerEnd);
+}
+
+function insertPrefixedLine(textarea, lineText, selectSubstring) {
+    const start = textarea.selectionStart;
+    const v = textarea.value;
+    const needsLeadingNl = start > 0 && v[start - 1] !== '\n';
+    const insertion = `${needsLeadingNl ? '\n' : ''}${lineText}`;
+    const newVal = `${v.slice(0, start)}${insertion}${v.slice(start)}`;
+    textarea.value = newVal;
+    textarea.focus();
+    if (selectSubstring) {
+        const idx = newVal.indexOf(selectSubstring, start);
+        if (idx !== -1) {
+            textarea.setSelectionRange(idx, idx + selectSubstring.length);
+            return;
+        }
+    }
+    const pos = start + insertion.length;
+    textarea.setSelectionRange(pos, pos);
+}
+
+function applyMarkdownTool(action) {
+    const textarea = document.getElementById('post-content');
+    if (!textarea) return;
+
+    switch (action) {
+        case 'bold':
+            wrapSelection(textarea, '**', '**', 'bold text');
+            break;
+        case 'italic':
+            wrapSelection(textarea, '*', '*', 'italic text');
+            break;
+        case 'link':
+            wrapSelection(textarea, '[', '](https://)', 'link text');
+            break;
+        case 'code':
+            wrapSelection(textarea, '`', '`', 'code');
+            break;
+        case 'h2':
+            insertPrefixedLine(textarea, '## Section title\n', 'Section title');
+            break;
+        case 'quote':
+            insertPrefixedLine(textarea, '> ');
+            break;
+        case 'ul':
+            insertPrefixedLine(textarea, '- ');
+            break;
+        case 'ol':
+            insertPrefixedLine(textarea, '1. ');
+            break;
+        case 'fence':
+            insertPrefixedLine(textarea, '```\ncode here\n```\n', 'code here');
+            break;
+        case 'hr':
+            insertPrefixedLine(textarea, '\n---\n');
+            break;
+        default:
+            return;
+    }
+    updatePreview();
+}
+
 /**
  * Get current post ID
  */
@@ -58,6 +162,7 @@ export async function loadPosts() {
                     </span>
                     <span>${new Date(post.created_at).toLocaleDateString()}</span>
                     <span>${post.genre || 'Uncategorized'}</span>
+                    ${post.author_name ? `<span>By ${escapeHtml(post.author_name)}</span>` : ''}
                 </div>
             </div>
             <div class="post-actions">
@@ -118,6 +223,7 @@ export async function editPost(id) {
 export function fillEditor(post) {
     const fields = [
         { id: 'post-title', value: post.title || '' },
+        { id: 'post-author-name', value: post.author_name || '' },
         { id: 'post-slug', value: post.slug || '' },
         { id: 'post-genre', value: post.genre || 'tech' },
         { id: 'post-date', value: post.published_at ? new Date(post.published_at).toISOString().slice(0, 16) : '' },
@@ -150,8 +256,11 @@ export async function savePost() {
     if (saveBtn) saveBtn.disabled = true;
     if (statusSpan) statusSpan.textContent = 'Saving...';
 
+    const authorRaw = document.getElementById('post-author-name')?.value?.trim() ?? '';
+
     const postData = {
         title: document.getElementById('post-title').value,
+        author_name: authorRaw || null,
         slug: document.getElementById('post-slug').value,
         genre: document.getElementById('post-genre').value,
         published_at: document.getElementById('post-date').value
@@ -220,7 +329,7 @@ export function updatePreview() {
     const content = document.getElementById('post-content')?.value || '';
     const preview = document.getElementById('markdown-preview');
     if (preview && typeof marked !== 'undefined') {
-        preview.innerHTML = marked.parse(content);
+        preview.innerHTML = marked.parse(content || '*Nothing to preview yet.*');
     }
 }
 
@@ -257,5 +366,18 @@ export function setupBlogEditorListeners() {
     const contentTextarea = document.getElementById('post-content');
     if (contentTextarea) {
         contentTextarea.addEventListener('input', updatePreview);
+        contentTextarea.addEventListener('keydown', e => {
+            if (e.key !== 'Tab') return;
+            e.preventDefault();
+            insertRaw(contentTextarea, '  ');
+            updatePreview();
+        });
+    }
+
+    const toolbar = document.getElementById('markdown-toolbar');
+    if (toolbar) {
+        toolbar.querySelectorAll('[data-md]').forEach(btn => {
+            btn.addEventListener('click', () => applyMarkdownTool(btn.getAttribute('data-md')));
+        });
     }
 }

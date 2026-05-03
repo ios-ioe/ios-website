@@ -73,7 +73,9 @@ export async function searchPosts(searchQuery) {
         .from('blog_posts')
         .select('*')
         .eq('is_published', true)
-        .or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
+        .or(
+            `title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%,author_name.ilike.%${searchQuery}%`
+        )
         .order('published_at', { ascending: false });
 
     if (error) {

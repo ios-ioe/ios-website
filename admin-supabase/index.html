@@ -211,6 +211,13 @@
                         <input type="text" id="post-title" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="post-author-name">Writer name</label>
+                        <input type="text" id="post-author-name" placeholder="e.g. Priya Sharma — shown on the blog"
+                            maxlength="120" autocomplete="name">
+                        <p class="form-hint">How readers see the author on cards and the full article. You can change it per post.</p>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="post-slug">Slug</label>
@@ -260,11 +267,33 @@
                         </label>
                     </div>
 
-                    <div class="form-group">
-                        <label for="post-content">Content (Markdown)</label>
+                    <div class="form-group markdown-form-group">
+                        <div class="markdown-field-head">
+                            <label for="post-content">Article body</label>
+                            <p class="form-hint markdown-intro-hint">Write in Markdown. Use the toolbar for common formatting, or type shortcuts like <code>**bold**</code> and <code># Heading</code>. Preview updates as you type.</p>
+                        </div>
+                        <div class="markdown-toolbar" id="markdown-toolbar" aria-label="Insert Markdown">
+                            <span class="markdown-toolbar-label">Insert</span>
+                            <button type="button" class="md-tool-btn" data-md="bold" title="Bold (** **)"><i class="fas fa-bold" aria-hidden="true"></i><span class="sr-only">Bold</span></button>
+                            <button type="button" class="md-tool-btn" data-md="italic" title="Italic (* *)"><i class="fas fa-italic" aria-hidden="true"></i><span class="sr-only">Italic</span></button>
+                            <button type="button" class="md-tool-btn" data-md="link" title="Link"><i class="fas fa-link" aria-hidden="true"></i><span class="sr-only">Link</span></button>
+                            <button type="button" class="md-tool-btn" data-md="h2" title="Heading ##"><i class="fas fa-heading" aria-hidden="true"></i><span class="sr-only">Heading</span></button>
+                            <button type="button" class="md-tool-btn" data-md="quote" title="Blockquote"><i class="fas fa-quote-right" aria-hidden="true"></i><span class="sr-only">Quote</span></button>
+                            <button type="button" class="md-tool-btn" data-md="ul" title="Bullet list"><i class="fas fa-list-ul" aria-hidden="true"></i><span class="sr-only">Bullet list</span></button>
+                            <button type="button" class="md-tool-btn" data-md="ol" title="Numbered list"><i class="fas fa-list-ol" aria-hidden="true"></i><span class="sr-only">Numbered list</span></button>
+                            <button type="button" class="md-tool-btn" data-md="code" title="Inline code"><i class="fas fa-code" aria-hidden="true"></i><span class="sr-only">Inline code</span></button>
+                            <button type="button" class="md-tool-btn" data-md="fence" title="Code block ```"><i class="fas fa-file-code" aria-hidden="true"></i><span class="sr-only">Code block</span></button>
+                            <button type="button" class="md-tool-btn" data-md="hr" title="Horizontal rule"><i class="fas fa-minus" aria-hidden="true"></i><span class="sr-only">Horizontal rule</span></button>
+                        </div>
                         <div class="markdown-editor">
-                            <textarea id="post-content"></textarea>
-                            <div id="markdown-preview" class="markdown-preview"></div>
+                            <div class="markdown-pane markdown-pane--write">
+                                <span class="markdown-pane-label">Write</span>
+                                <textarea id="post-content" class="markdown-source" placeholder="# Hello&#10;&#10;Tell your story here. Single line breaks show as new paragraphs in preview." spellcheck="true"></textarea>
+                            </div>
+                            <div class="markdown-pane markdown-pane--preview">
+                                <span class="markdown-pane-label">Live preview</span>
+                                <div id="markdown-preview" class="markdown-preview"></div>
+                            </div>
                         </div>
                     </div>
                 </form>
