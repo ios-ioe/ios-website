@@ -1,38 +1,134 @@
 /*===== VARIABLES CSS =====*/
 :root {
-  --header-height: 3rem;
+  /* Colors */
+  --color-phosphor-mint: #ddffdc;
+  --color-reactor-green: #7fee64;
+  --color-soft-glow: #c8f9b6;
+  --color-pale-mist: #def0dd;
+  --color-sage-tint: #aed2a4;
+  --color-void: #000000;
+  --color-carbon: #212525;
+  --color-moss: #3e4a3c;
+  --color-fern: #485346;
+  --color-lichen: #677d64;
+  --color-slate: #697368;
+  --color-stone: #859085;
+  --color-bone: #ffffff;
+
+  /* Typography — Font Families */
+  --font-goga: 'Satoshi', 'Inter Display', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter-variable: 'Inter', 'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.33;
+  --tracking-caption: -0.31px;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.38;
+  --tracking-body-sm: -0.31px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.35px;
+  --text-subheading: 20px;
+  --leading-subheading: 1.5;
+  --tracking-subheading: -0.12px;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.4;
+  --tracking-heading-sm: -0.36px;
+  --text-heading: 40px;
+  --leading-heading: 1.3;
+  --tracking-heading: -0.6px;
+  --text-heading-lg: 54px;
+  --leading-heading-lg: 1.2;
+  --tracking-heading-lg: -0.81px;
+  --text-display: 64px;
+  --leading-display: 1.05;
+  --tracking-display: -0.96px;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-60: 60px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-120: 120px;
+  --spacing-128: 128px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 64px;
+  --card-padding: 16px;
+  --element-gap: 16px;
+
+  /* Border Radius */
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Named Radii */
+  --radius-cards: 16px;
+  --radius-links: 8px;
+  --radius-pills: 9999px;
+  --radius-buttons: 4px;
+
+  /* Shadows */
+  --shadow-md: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+
+  /* Surfaces */
+  --surface-void-canvas: #000000;
+  --surface-carbon-surface: #212525;
+  --surface-moss-surface: #3e4a3c;
+  --surface-fern-surface: #485346;
+  --surface-pale-mist-surface: #def0dd;
+
+  /* Compat Mappings to prevent theme breaking */
+  --header-height: 3.5rem;
   --font-semi: 600;
-  /* Club palette: navy + teal primary + warm accent */
-  --hue-primary: 192;
-  --hue-navy: 222;
-  --first-color: hsl(var(--hue-primary), 56%, 38%);
-  --first-color-light: hsl(var(--hue-primary), 45%, 92%);
-  --second-color: hsl(var(--hue-navy), 35%, 22%);
-  --accent-color: hsl(16, 82%, 52%);
-  --accent-color-soft: hsl(16, 75%, 94%);
-  --surface-page: hsl(210, 36%, 97%);
-  --surface-card: #ffffff;
-  --text-muted: hsl(215, 16%, 42%);
-  --body-font: "DM Sans", system-ui, sans-serif;
-  --heading-font: "Plus Jakarta Sans", system-ui, sans-serif;
-  --big-font-size: 2rem;
-  --h2-font-size: 1.25rem;
-  --normal-font-size: .938rem;
-  --smaller-font-size: .75rem;
-  --mb-2: 1rem;
-  --mb-4: 2rem;
-  --mb-5: 2.5rem;
-  --mb-6: 3rem;
+  --first-color: var(--color-reactor-green);
+  --first-color-light: var(--color-soft-glow);
+  --second-color: var(--color-phosphor-mint);
+  --accent-color: var(--color-reactor-green);
+  --accent-color-soft: var(--color-pale-mist);
+  --surface-page: var(--color-void);
+  --surface-card: var(--color-carbon);
+  --text-muted: var(--color-lichen);
+  --body-font: var(--font-inter-variable);
+  --heading-font: var(--font-goga);
+  --big-font-size: var(--text-display);
+  --h2-font-size: var(--text-heading-sm);
+  --normal-font-size: var(--text-body);
+  --smaller-font-size: var(--text-body-sm);
+  --mb-2: var(--spacing-8);
+  --mb-4: var(--spacing-16);
+  --mb-5: var(--spacing-20);
+  --mb-6: var(--spacing-24);
   --z-back: -10;
   --z-fixed: 100;
 }
 
 @media screen and (min-width: 968px) {
   :root {
-    --big-font-size: 3.5rem;
-    --h2-font-size: 2rem;
-    --normal-font-size: 1rem;
-    --smaller-font-size: .875rem;
+    --big-font-size: var(--text-display);
+    --h2-font-size: var(--text-heading);
+    --normal-font-size: var(--text-body);
+    --smaller-font-size: var(--text-body-sm);
   }
 }
 
@@ -45,20 +141,32 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-void);
 }
 
 body {
   margin: var(--header-height) 0 0 0;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
-  background: var(--surface-page);
-  color: var(--second-color);
+  background: var(--color-void);
+  color: var(--color-phosphor-mint);
 }
 
 h1,
 h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-goga);
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--color-phosphor-mint);
+}
+
 p {
   margin: 0;
+  line-height: 1.5;
 }
 
 .text {
@@ -84,33 +192,24 @@ img {
 /*===== CLASS CSS ===== */
 .section-title {
   position: relative;
-  font-family: var(--heading-font);
-  font-size: var(--h2-font-size);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--second-color);
+  font-family: var(--font-goga);
+  font-size: var(--text-heading);
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  color: var(--color-phosphor-mint);
   margin-top: var(--mb-2);
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--spacing-32);
   text-align: center;
 }
 
 .section-title::after {
-  position: absolute;
-  content: "";
-  width: 72px;
-  height: 0.28rem;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: 2.35rem;
-  background: linear-gradient(90deg, var(--first-color), hsl(var(--hue-primary), 50%, 50%));
-  border-radius: 4px;
+  content: none; /* Removed underline decoration to align with sleek flat styling */
 }
 
 .section-intro {
   text-align: center;
-  margin-bottom: var(--mb-4);
-  max-width: 40rem;
+  margin-bottom: var(--spacing-40);
+  max-width: 48rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -121,25 +220,29 @@ img {
 
 .section-intro__lead {
   margin: 0;
-  padding-top: 2.25rem;
-  font-size: 1.05rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-  font-weight: 500;
+  padding-top: var(--spacing-16);
+  font-size: var(--text-subheading);
+  line-height: 1.5;
+  color: var(--color-soft-glow);
+  font-weight: 400;
 }
 
 .section {
   position: relative;
-  padding-top: 4rem;
-  padding-bottom: 3rem;
+  padding-top: var(--spacing-64);
+  padding-bottom: var(--spacing-64);
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: hsl(var(--hue-primary), 30%, 93%);
+  background: var(--color-void);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--hue-primary), 45%, 42%);
-  border-radius: 4px;
+  background: var(--color-moss);
+  border-radius: var(--radius-buttons);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fern);
 }
