@@ -6,6 +6,7 @@
 import { supabase } from '../../js/supabase-config.js';
 import { showToast, showScreen, showSpinner, confirmDialog } from './ui-utils.js';
 import { getCurrentUser } from './auth.js';
+import { uploadFile } from './profile-admin.js';
 
 // State
 let currentEventId = null;
@@ -58,7 +59,7 @@ export async function loadEvents() {
                         ${a.is_pinned ? 'Pinned' : 'Normal'}
                     </span>
                     <span>${a.location || 'No Issuer'}</span>
-                    <span>${a.event_date ? new Date(a.event_date).toLocaleDateString() : ''}</span>
+                    <span>${getEventDateLabel(a.event_date)}</span>
                 </div>
             </div>
             <div class="post-actions">
@@ -74,6 +75,18 @@ export async function loadEvents() {
 
     // Add event listeners
     setupEventEventListeners();
+}
+
+/**
+ * Get a display label for an event date.
+ */
+function getEventDateLabel(eventDate) {
+    if (!eventDate) return 'Coming Soon';
+
+    const parsedDate = new Date(eventDate);
+    if (Number.isNaN(parsedDate.getTime())) return 'Coming Soon';
+
+    return parsedDate.toLocaleDateString();
 }
 
 /**
@@ -149,6 +162,7 @@ export async function saveEvent() {
 
     const imageRaw = document.getElementById('event-image')?.value?.trim() ?? '';
     const linkRaw = document.getElementById('event-link')?.value?.trim() ?? '';
+    const eventDateRaw = document.getElementById('event-date')?.value?.trim() ?? '';
 
     const eventData = {
         title: document.getElementById('event-title').value.trim(),
@@ -157,7 +171,7 @@ export async function saveEvent() {
             .replace(/\r/g, '\n')
             .trim(),
         location: document.getElementById('event-location').value.trim(),
-        event_date: document.getElementById('event-date').value || null,
+        event_date: eventDateRaw || null,
         image_url: imageRaw || null,
         link_url: linkRaw || null,
         is_pinned: document.getElementById('event-pinned').checked,
@@ -240,5 +254,31 @@ export function setupEventEditorListeners() {
     const saveBtn = document.getElementById('event-save-btn');
     if (saveBtn) {
         saveBtn.addEventListener('click', saveEvent);
+    }
+
+    const uploadBtn = document.getElementById('event-upload-btn');
+    const fileInput = document.getElementById('event-image-upload');
+    const urlInput = document.getElementById('event-image');
+
+    if (uploadBtn && fileInput && urlInput) {
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (!files || files.length === 0) return;
+
+            const file = files[0];
+            const originalText = uploadBtn.textContent;
+            uploadBtn.textContent = 'Uploading...';
+            uploadBtn.disabled = true;
+
+            const url = await uploadFile(file);
+            if (url) {
+                urlInput.value = url;
+            }
+
+            uploadBtn.textContent = originalText || 'Upload';
+            uploadBtn.disabled = false;
+            fileInput.value = '';
+        });
     }
 }

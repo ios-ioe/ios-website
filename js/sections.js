@@ -218,9 +218,7 @@ export async function initEvents() {
             const imageUrl = typeof a.image_url === 'string' ? a.image_url.trim() : '';
             const linkUrl = typeof a.link_url === 'string' ? a.link_url.trim() : '';
             const title = typeof a.title === 'string' ? a.title : '';
-            const dateStr = a.event_date
-                ? new Date(a.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                : '';
+            const dateStr = getEventDateLabel(a.event_date);
             const loc = typeof a.location === 'string' ? a.location.trim() : '';
 
             let leftColumn;
@@ -331,6 +329,15 @@ export async function initEvents() {
         console.error('Error loading events:', err);
         container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: red;">Error loading events.</div>';
     }
+}
+
+function getEventDateLabel(eventDate) {
+    if (!eventDate) return 'Coming Soon';
+
+    const parsedDate = new Date(eventDate);
+    if (Number.isNaN(parsedDate.getTime())) return 'Coming Soon';
+
+    return parsedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 /**
