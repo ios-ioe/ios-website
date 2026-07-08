@@ -367,10 +367,11 @@
     transition: all 0.15s ease;
 }
 
-.chat-suggestion-chip i {
+.chat-suggestion-chip__prompt {
     color: var(--color-lichen);
-    font-size: 0.75rem;
-    transform: scaleX(-1);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.8125rem;
     flex-shrink: 0;
 }
 
@@ -384,7 +385,7 @@
     line-height: 1.35;
 }
 
-/* Composer “prompt box” */
+/* ===== Composer "prompt box" — styled like a live terminal input line ===== */
 .chat-composer {
     display: flex;
     align-items: center;
@@ -393,32 +394,23 @@
     background-color: var(--color-carbon);
     border: 1px solid var(--color-fern);
     border-radius: var(--radius-links);
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .chat-composer:focus-within {
     border-color: var(--color-reactor-green);
+    box-shadow: 0 0 0 3px rgba(127, 238, 100, 0.12);
 }
 
-.chat-composer__leading {
-    display: flex;
-    align-items: center;
-    gap: 0.15rem;
+/* Prompt glyph handles the leading slot now; attach/options icons removed */
+.chat-composer__prompt {
     flex-shrink: 0;
-}
-
-.chat-composer__icon-btn {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: var(--radius-buttons);
-    background: transparent;
-    color: var(--color-lichen);
-    cursor: not-allowed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
     font-size: 0.95rem;
-    opacity: 0.55;
+    color: var(--color-reactor-green);
+    user-select: none;
+    padding-left: 0.15rem;
 }
 
 .chat-composer__input {
@@ -428,18 +420,32 @@
     background: transparent;
     outline: none;
     color: var(--color-phosphor-mint);
-    font-family: inherit;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.9375rem;
     padding: 0.35rem 0.25rem;
+    caret-color: var(--color-reactor-green);
 }
 
 .chat-composer__input::placeholder {
     color: var(--color-lichen);
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .chat-composer__input:disabled {
     opacity: 0.55;
     cursor: not-allowed;
+}
+
+/* Blinking block cursor shown only while the input is empty and focused,
+   so it reads like an idle terminal waiting for input (native caret takes
+   over the instant typing starts). */
+.chat-composer__input:focus:placeholder-shown {
+    animation: chat-input-idle-caret 1s step-end infinite;
+}
+
+@keyframes chat-input-idle-caret {
+    0%, 100% { caret-color: var(--color-reactor-green); }
+    50% { caret-color: transparent; }
 }
 
 .chat-composer__trailing {
@@ -449,19 +455,7 @@
     flex-shrink: 0;
 }
 
-.chat-composer__model {
-    font-size: 0.75rem;
-    color: var(--color-phosphor-mint);
-    padding: 0.35rem 0.6rem;
-    border-radius: var(--radius-buttons);
-    border: 1px solid var(--color-fern);
-    background-color: var(--color-moss);
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    user-select: none;
-}
+/* Model pill removed — composer is now just prompt + input + send */
 
 .chat-composer__send {
     width: 40px;
