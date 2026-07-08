@@ -9,7 +9,7 @@ const chatSuggestions = document.getElementById('chat-suggestions');
 
 const API_URL = 'https://khagu-ios-website-bot.hf.space/query';
 
-const BOT_SPARKLE_SVG = `<svg class="chat-sparkle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" /></svg>`;
+const BOT_SPARKLE_SVG = `<svg class="chat-sparkle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="4 6 10 12 4 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /><line x1="12" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" /></svg>`;
 
 /** Bumped when a new send starts so in-flight streams stop updating the UI. */
 let streamGeneration = 0;
