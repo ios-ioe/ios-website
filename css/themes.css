@@ -15,8 +15,9 @@
   --color-reactor-green: #5eead4; /* Mint cyan */
   --color-soft-glow: #99f6e4;
   --color-sage-tint: #2dd4bf;
-  --color-moss: #115e59;
-  --color-fern: #134e4a;
+  --color-moss: #134e4a;
+  --color-fern: #155e56;
+  --color-on-accent: #002220;
 }
 
 /* Ensure all page components have void backgrounds and clear contrast */
@@ -51,7 +52,7 @@ body,
 .button,
 .dark-mode .button {
   background-color: var(--color-reactor-green) !important;
-  color: var(--color-void) !important;
+  color: var(--color-on-accent) !important;
 }
 
 .button:hover,

@@ -4,12 +4,13 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-reactor-green);
-  color: var(--color-void);
+  color: var(--color-on-accent);
   padding: 8px 20px;
   font-family: var(--font-inter-variable);
   font-size: var(--text-body-sm);
   font-weight: var(--font-weight-medium);
-  letter-spacing: -0.31px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   border-radius: var(--radius-buttons);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
   border: none;
@@ -37,14 +38,14 @@
 
 .button--blogs {
   background-color: var(--color-reactor-green);
-  color: var(--color-void);
+  color: var(--color-on-accent);
   border: none;
 }
 
 .button--blogs:hover,
 .button--blogs:focus {
   background-color: var(--color-soft-glow);
-  color: var(--color-void);
+  color: var(--color-on-accent);
 }
 
 /*===== CARDS =====*/

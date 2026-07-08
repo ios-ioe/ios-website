@@ -1,23 +1,27 @@
+/*===== IGNITE_OS TERMINAL THEME — FONT IMPORT =====*/
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..900&display=swap');
+
 /*===== VARIABLES CSS =====*/
 :root {
-  /* Colors */
-  --color-phosphor-mint: #ddffdc;
-  --color-reactor-green: #7fee64;
-  --color-soft-glow: #c8f9b6;
-  --color-pale-mist: #def0dd;
-  --color-sage-tint: #aed2a4;
-  --color-void: #000000;
-  --color-carbon: #212525;
-  --color-moss: #3e4a3c;
-  --color-fern: #485346;
-  --color-lichen: #677d64;
-  --color-slate: #697368;
-  --color-stone: #859085;
-  --color-bone: #ffffff;
+  /* Colors — IGNITE_OS terminal palette */
+  --color-phosphor-mint: #e3e2e2;   /* on-background: primary text + headings */
+  --color-reactor-green: #00e639;   /* primary-fixed-dim: core accent */
+  --color-soft-glow: #72ff70;       /* primary-fixed: bright hover accent */
+  --color-pale-mist: #ebffe2;       /* primary: near-white green tint, light surfaces */
+  --color-sage-tint: #00ff41;       /* primary-container: secondary bright accent */
+  --color-void: #121414;            /* background/surface: page canvas */
+  --color-carbon: #0d0e0f;          /* surface-container-lowest: cards, terminal window */
+  --color-moss: #1f2020;            /* surface-container: nav, panels */
+  --color-fern: #3b4b37;            /* outline-variant: default borders */
+  --color-lichen: #84967e;          /* outline: muted icons/labels */
+  --color-slate: #b9ccb2;           /* on-surface-variant: secondary/lead text */
+  --color-stone: #4a4949;           /* secondary-container */
+  --color-bone: #fff8f4;            /* tertiary: warm white, rare use */
+  --color-on-accent: #002203;       /* on-primary-fixed: text on green fills */
 
-  /* Typography — Font Families */
-  --font-goga: 'Satoshi', 'Inter Display', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-inter-variable: 'Inter', 'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Typography — Font Families (monospace throughout, per IGNITE_OS theme) */
+  --font-goga: 'JetBrains Mono', ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-inter-variable: 'JetBrains Mono', ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Typography — Scale */
   --text-caption: 12px;
@@ -76,27 +80,27 @@
   --card-padding: 16px;
   --element-gap: 16px;
 
-  /* Border Radius */
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-2xl: 16px;
+  /* Border Radius — IGNITE_OS is a flat, brutalist terminal grid: sharp corners everywhere except true pills/circles */
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-2xl: 0px;
   --radius-full: 9999px;
 
   /* Named Radii */
-  --radius-cards: 16px;
-  --radius-links: 8px;
+  --radius-cards: 0px;
+  --radius-links: 0px;
   --radius-pills: 9999px;
-  --radius-buttons: 4px;
+  --radius-buttons: 0px;
 
   /* Shadows */
   --shadow-md: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
 
   /* Surfaces */
-  --surface-void-canvas: #000000;
-  --surface-carbon-surface: #212525;
-  --surface-moss-surface: #3e4a3c;
-  --surface-fern-surface: #485346;
-  --surface-pale-mist-surface: #def0dd;
+  --surface-void-canvas: #121414;
+  --surface-carbon-surface: #0d0e0f;
+  --surface-moss-surface: #1f2020;
+  --surface-fern-surface: #3b4b37;
+  --surface-pale-mist-surface: #ebffe2;
 
   /* Compat Mappings to prevent theme breaking */
   --header-height: 3.5rem;
@@ -206,6 +210,17 @@ img {
   content: none; /* Removed underline decoration to align with sleek flat styling */
 }
 
+/* Terminal comment-style prefix — a code-comment marker ahead of every heading */
+.section-title {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.section-title::before {
+  content: "// ";
+  color: var(--color-reactor-green);
+}
+
 .section-intro {
   text-align: center;
   margin-bottom: var(--spacing-40);
@@ -223,7 +238,7 @@ img {
   padding-top: var(--spacing-16);
   font-size: var(--text-subheading);
   line-height: 1.5;
-  color: var(--color-soft-glow);
+  color: var(--color-slate);
   font-weight: 400;
 }
 
@@ -245,4 +260,38 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-fern);
+}
+
+/* Terminal-style keyboard focus: a solid green cursor block, not a soft glow ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.button:focus-visible,
+.button--outline:focus-visible {
+  outline: 2px solid var(--color-reactor-green);
+  outline-offset: 2px;
+}
+
+/* Ambient CRT scanline texture — fixed, decorative, ignores pointer events */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce), (max-width: 600px) {
+  body::before {
+    display: none;
+  }
 }
