@@ -83,6 +83,45 @@
   align-items: flex-start;
 }
 
+/*===== TEAM CARD =====*/
+.team__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team__photo-wrap {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.team__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.team__name {
+  margin: 0;
+}
+
+.team__title-role {
+  color: var(--color-reactor-green);
+}
+
 /*===== FORMS =====*/
 .contact__input {
   width: 100%;

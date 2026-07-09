@@ -342,6 +342,9 @@ function getEventDateLabel(eventDate) {
 
 /**
  * Initialize Experience/Timeline Section
+ *
+ * NOTE: Team cards intentionally show only the photo, name, and role.
+ * The tenure/year and description fields are no longer rendered.
  */
 export async function initTeam() {
     const container = document.getElementById('team-container');
@@ -391,21 +394,8 @@ export async function initTeam() {
                 sub.textContent = subtitleRole;
                 header.appendChild(sub);
             }
-            const dateEl = document.createElement('div');
-            dateEl.className = 'team__date';
-            dateEl.textContent = exp.tenure || '';
-            header.appendChild(dateEl);
 
-            const content = document.createElement('div');
-            content.className = 'team__content';
-            const p = document.createElement('p');
-            p.className = 'team__desc';
-            p.textContent = exp.description || '';
-
-            content.appendChild(p);
             item.appendChild(header);
-            item.appendChild(content);
-
             container.appendChild(item);
         });
 

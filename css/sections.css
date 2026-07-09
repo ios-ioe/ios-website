@@ -385,8 +385,8 @@
 }
 
 .team__photo {
-  width: 80px;
-  height: 80px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-fern);
@@ -404,19 +404,6 @@
   font-size: var(--text-body-sm);
   color: var(--color-reactor-green);
   margin-bottom: var(--spacing-4);
-}
-
-.team__date {
-  font-family: var(--font-inter-variable);
-  font-size: var(--text-caption);
-  color: var(--color-lichen);
-  margin-bottom: var(--spacing-8);
-}
-
-.team__desc {
-  font-family: var(--font-inter-variable);
-  font-size: var(--text-body-sm);
-  color: var(--color-phosphor-mint);
 }
 
 /*===== CONTACT SECTION =====*/

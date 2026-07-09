@@ -267,6 +267,28 @@
         .project--hidden { display: none; }
 
         section[id] { scroll-margin-top: 80px; }
+
+        /* ---- Hero terminal progress bar ---- */
+        .terminal-progress { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+        .terminal-progress__track {
+            flex: 1;
+            max-width: 320px;
+            height: 14px;
+            background: #0d0e0f;
+            border: 1px solid #3b4b37;
+            overflow: hidden;
+        }
+        .terminal-progress__fill {
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #00e639 0px, #00e639 6px,
+                #0a1f0d 6px, #0a1f0d 8px
+            );
+            width: 0%;
+            transition: width 1.2s ease-out;
+        }
+        .terminal-progress__pct { color: #00e639; font-size: 13px; min-width: 34px; }
     </style>
 </head>
 
@@ -323,24 +345,34 @@
                     <div class="w-12"></div>
                 </div>
                 <div class="p-6 font-body-md text-primary-fixed-dim space-y-4 overflow-hidden">
-                    <pre class="font-bold text-primary-fixed-dim text-[10px] sm:text-sm leading-tight">██╗ ██████╗ ███╗   ██╗██╗████████╗███████╗    ██████╗ ███████╗
+                    <div class="overflow-x-auto">
+                    <pre class="font-bold text-primary-fixed-dim leading-tight" style="font-size: clamp(5px, 2.1vw, 14px); width: max-content;">██╗ ██████╗ ███╗   ██╗██╗████████╗███████╗    ██████╗ ███████╗
 ██║██╔════╝ ████╗  ██║██║╚══██╔══╝██╔════╝   ██╔═══██╗██╔════╝
 ██║██║  ███╗██╔██╗ ██║██║   ██║   █████╗     ██║   ██║███████╗
 ██║██║   ██║██║╚██╗██║██║   ██║   ██╔══╝     ██║   ██║╚════██║
 ██║╚██████╔╝██║ ╚████║██║   ██║   ███████╗██╗╚██████╔╝███████║
 ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   ╚═╝   ╚══════╝╚═╝ ╚═════╝ ╚══════╝</pre>
+                    </div>
                     <div class="space-y-1">
                         <p><span class="text-on-surface-variant"># IOE Pulchowk Campus · student community · non-profit</span></p>
                         <p>[ <span class="text-primary-fixed">OK</span> ] Research-driven development</p>
                         <p>[ <span class="text-primary-fixed">OK</span> ] Open-source under GitHub &amp; PyPI</p>
                         <p>[ <span class="text-primary-fixed">OK</span> ] Interdisciplinary — open to every department</p>
-                        <p class="mt-4">$ ignite-os focus --domains</p>
-                        <p class="text-on-surface-variant">&gt;&gt; healthcare, education, government-transparency, agriculture</p>
+                        <p class="mt-4">$ ignite-os install --global --verbose</p>
+                        <p class="text-on-surface-variant">&gt;&gt; Resolving dependencies...</p>
+                        <p class="text-on-surface-variant">&gt;&gt; Fetching [healthcare-service, education-hub, transparency-ledger]</p>
+                        <div class="terminal-progress">
+                            <span>[</span>
+                            <div class="terminal-progress__track">
+                                <div class="terminal-progress__fill" id="hero-progress-fill"></div>
+                            </div>
+                            <span>]</span>
+                            <span class="terminal-progress__pct" id="hero-progress-pct">0%</span>
+                        </div>
                         <p class="pt-4">$ waiting for user input<span class="terminal-cursor"></span></p>
                     </div>
                 </div>
             </div>
-
             <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 <div class="space-y-6">
                     <h1 class="font-headline-lg text-headline-lg text-on-background">Welcome to <span class="text-primary-fixed-dim">Ignite Open Source</span></h1>
@@ -360,7 +392,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-gutter">
                     <div class="border border-outline-variant p-6 bg-surface-container-lowest">
                         <h3 class="font-label-md text-label-md text-primary-fixed-dim mb-2 uppercase">[ STATUS: ACTIVE ]</h3>
-                        <p class="font-body-md text-body-md">Building open-source tools for public utility since 2021.</p>
+                        <p class="font-body-md text-body-md">Building open-source tools for public utility since 2026.</p>
                     </div>
                     <div class="border border-outline-variant p-6 bg-surface-container-lowest">
                         <h3 class="font-label-md text-label-md text-primary-fixed-dim mb-2 uppercase">[ MODEL: NON-PROFIT ]</h3>
@@ -694,6 +726,22 @@
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/sections.js"></script>
     <script defer src="js/chat.js"></script>
+    <script>
+        (function () {
+            var fill = document.getElementById('hero-progress-fill');
+            var pct = document.getElementById('hero-progress-pct');
+            if (!fill || !pct) return;
+            requestAnimationFrame(function () {
+                fill.style.width = '82%';
+                var n = 0;
+                var t = setInterval(function () {
+                    n += 2;
+                    if (n >= 82) { n = 82; clearInterval(t); }
+                    pct.textContent = n + '%';
+                }, 25);
+            });
+        })();
+    </script>
 </body>
 
 </html>

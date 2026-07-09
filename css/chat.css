@@ -345,12 +345,15 @@
 }
 
 .chat-suggestions {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0.45rem;
     margin-bottom: 0.65rem;
 }
 
+.chat-suggestions.is-open {
+    display: flex;
+}
 .chat-suggestion-chip {
     display: flex;
     align-items: center;
@@ -563,4 +566,31 @@
     padding: 0;
     color: inherit;
     border: none;
+}
+.chat-turn__prompt {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    width: 28px;
+    text-align: right;
+    padding-right: 4px;
+    user-select: none;
+}
+
+.chat-turn__prompt--user {
+    color: var(--color-reactor-green);
+}
+
+.chat-turn__prompt--bot {
+    color: var(--color-phosphor-mint);
+}
+
+.chat-turn--user .chat-turn__content {
+    color: var(--color-reactor-green);
+}
+
+.chat-turn--bot .chat-turn__content {
+    color: #ffffff;
 }

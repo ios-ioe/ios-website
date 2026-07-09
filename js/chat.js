@@ -61,10 +61,9 @@ function addUserTurn(text) {
     const turn = document.createElement('div');
     turn.classList.add('chat-turn', 'chat-turn--user');
 
-    const avatar = document.createElement('div');
-    avatar.className = 'chat-turn__avatar';
-    avatar.setAttribute('aria-hidden', 'true');
-    avatar.innerHTML = '<i class="fas fa-user"></i>';
+    const prompt = document.createElement('span');
+    prompt.className = 'chat-turn__prompt chat-turn__prompt--user';
+    prompt.textContent = '$';
 
     const body = document.createElement('div');
     body.className = 'chat-turn__body';
@@ -74,7 +73,7 @@ function addUserTurn(text) {
     content.textContent = text;
 
     body.appendChild(content);
-    turn.appendChild(avatar);
+    turn.appendChild(prompt);
     turn.appendChild(body);
     chatMessages.appendChild(turn);
 }
@@ -367,9 +366,9 @@ async function sendMessage() {
 
 chatSendBtn.addEventListener('click', sendMessage);
 chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Tab') {
         e.preventDefault();
-        if (!chatSendBtn.disabled) sendMessage();
+        chatSuggestions.classList.toggle('is-open');
     }
 });
 
@@ -388,10 +387,10 @@ function addLoadingIndicator() {
     const turn = document.createElement('div');
     turn.classList.add('chat-turn', 'chat-turn--bot', 'chat-turn--typing');
 
-    const avatar = document.createElement('div');
-    avatar.className = 'chat-turn__avatar chat-turn__avatar--bot';
+    const avatar = document.createElement('span');
+    avatar.className = 'chat-turn__prompt chat-turn__prompt--bot';
     avatar.setAttribute('aria-hidden', 'true');
-    avatar.innerHTML = BOT_SPARKLE_SVG;
+    avatar.textContent = '>>';
 
     const body = document.createElement('div');
     body.className = 'chat-turn__body';
