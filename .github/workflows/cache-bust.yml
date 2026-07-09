@@ -1,0 +1,55 @@
+name: Cache Bust Assets
+
+# Runs every time you push to main, EXCEPT commits made by this workflow itself
+# (that guard is the [skip cache-bust] check below — prevents an infinite loop)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bust-cache:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip cache-bust]')"
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get short commit SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Update version query strings in HTML files
+        run: |
+          SHA=${{ steps.vars.outputs.sha_short }}
+          echo "Using version: $SHA"
+
+          # Find every HTML file in the repo (index.html, blog.html, etc.)
+          # and rewrite any ?v=... on local css/ or js/ references to the new SHA.
+          # If a reference has no ?v= yet, this also adds one.
+          find . -maxdepth 1 -name "*.html" | while read -r file; do
+            echo "Processing $file"
+
+            # Replace existing ?v=xxxx with ?v=SHA on css/ and js/ paths
+            sed -i -E "s#(css/[A-Za-z0-9_./-]+\.css)(\?v=[A-Za-z0-9._-]+)?#\1?v=${SHA}#g" "$file"
+            sed -i -E "s#(js/[A-Za-z0-9_./-]+\.js)(\?v=[A-Za-z0-9._-]+)?#\1?v=${SHA}#g" "$file"
+          done
+
+      - name: Commit and push updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "No cache-busting changes needed."
+          else
+            git commit -m "chore: bump cache-busting version to ${{ steps.vars.outputs.sha_short }} [skip cache-bust]"
+            git push
+          fi
