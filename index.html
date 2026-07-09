@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Preload critical assets -->
-    <link rel="preload" as="style" href="css/base.css">
+    <link rel="preload" as="style" href="css/base.css?v=99187f8">
     <link rel="preload" as="image" href="assets/img/themeimage.jpeg">
 
     <!-- Tailwind (design system for this template) -->
@@ -28,11 +28,11 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
     <!-- Boxicons & FontAwesome (deferred) -->
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet' media="print" onload="this.media='all'">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css?v=99187f8' rel='stylesheet' media="print" onload="this.media='all'">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css?v=99187f8" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript>
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css?v=99187f8' rel='stylesheet'>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css?v=99187f8" rel="stylesheet">
     </noscript>
 
     <!-- SEO -->
@@ -103,13 +103,13 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- CSS Modules (component-level styling maintained separately) -->
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/sections.css">
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/base.css?v=99187f8">
+    <link rel="stylesheet" href="css/layout.css?v=99187f8">
+    <link rel="stylesheet" href="css/components.css?v=99187f8">
+    <link rel="stylesheet" href="css/sections.css?v=99187f8">
+    <link rel="stylesheet" href="css/themes.css?v=99187f8">
+    <link rel="stylesheet" href="css/responsive.css?v=99187f8">
+    <link rel="stylesheet" href="css/chat.css?v=99187f8">
 
     <script id="tailwind-config">
         tailwind.config = {
@@ -187,7 +187,7 @@
 
     <!--
         FUNCTIONAL / STRUCTURAL CSS
-        These rules exist to guarantee js/main.js, js/sections.js and js/chat.js keep working
+        These rules exist to guarantee js/main.js?v=99187f8, js/sections.js?v=99187f8 and js/chat.js?v=99187f8 keep working
         (mobile nav toggle, "Others" dropdown, active-link scroll-spy, project modal, view-more/less,
         contact form validation states, buttons, social icons). If css/*.css already defines matching
         rules, these are redundant but harmless — consolidate later once you see the two side by side.
@@ -252,7 +252,7 @@
         #form-status.form-status--ok { color: #00e639; }
         #form-status.form-status--error { color: #ffb4ab; }
 
-        /* ---- Project modal (built by js/main.js from #project-modal-template) ---- */
+        /* ---- Project modal (built by js/main.js?v=99187f8 from #project-modal-template) ---- */
         .project__modal { position: fixed; inset: 0; background: rgba(5, 6, 6, .85); display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
         .project__modal.active { display: flex; }
         .project__modal-content { position: relative; background: #0d0e0f; border: 1px solid #3b4b37; max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; }
@@ -651,7 +651,7 @@
         </section>
     </main>
 
-    <!-- Chat Widget (self-contained; markup required as-is by js/chat.js). Trigger button now lives in the navbar (#chat-toggle-btn above); this container just holds the panel that drops down beneath it. -->
+    <!-- Chat Widget (self-contained; markup required as-is by js/chat.js?v=99187f8). Trigger button now lives in the navbar (#chat-toggle-btn above); this container just holds the panel that drops down beneath it. -->
     <div id="chat-widget" class="chat-widget chat-widget--anchored-nav">
         <div id="chat-window" class="chat-window">
             <div class="resizer resizer-t"></div>
@@ -723,9 +723,9 @@
     <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
     <!-- Supabase UMD must run before ES modules that import supabase-config. -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="module" src="js/main.js"></script>
-    <script type="module" src="js/sections.js"></script>
-    <script defer src="js/chat.js"></script>
+    <script type="module" src="js/main.js?v=99187f8"></script>
+    <script type="module" src="js/sections.js?v=99187f8"></script>
+    <script defer src="js/chat.js?v=99187f8"></script>
     <script>
         (function () {
             var fill = document.getElementById('hero-progress-fill');
