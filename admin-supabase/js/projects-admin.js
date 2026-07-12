@@ -134,6 +134,11 @@ export function fillProjectEditor(p) {
     if (pinnedCheckbox) {
         pinnedCheckbox.checked = p.is_pinned || false;
     }
+
+    const statusSelect = document.getElementById('project-status');
+    if (statusSelect) {
+        statusSelect.value = p.status || 'ongoing';
+    }
 }
 
 /**
@@ -159,6 +164,7 @@ export async function saveProject() {
         demo_url: document.getElementById('project-demo').value,
         tech_stack: techStack,
         is_pinned: document.getElementById('project-pinned').checked,
+        status: document.getElementById('project-status')?.value || 'ongoing',
         author_id: getCurrentUser()?.id
     };
 

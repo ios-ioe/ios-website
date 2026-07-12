@@ -70,8 +70,15 @@ export async function initProjects() {
             const techStack = p.tech_stack || [];
             const iconsHtml = techStack.map(t => `<span title="${t}">${getTechIconHTML(t)}</span>`).join(' ');
 
+            const statusLabels = { planning: 'Planning', ongoing: 'Ongoing', completed: 'Completed', on_hold: 'On Hold' };
+            const statusKey = p.status || 'ongoing';
+            const statusLabel = statusLabels[statusKey] || 'Ongoing';
+
             card.innerHTML = `
-                <img src="${p.image_url || 'assets/img/themeimage.jpeg'}" alt="${p.title}" class="project__img" loading="lazy">
+                <div class="project__img-wrap">
+                    <img src="${p.image_url || 'assets/img/themeimage.jpeg'}" alt="${p.title}" class="project__img" loading="lazy">
+                    <span class="project__status project__status--${statusKey}">${statusLabel}</span>
+                </div>
                 <div class="project__info">
                     <h3 class="project__title">${p.title}</h3>
                     <p class="project__desc">${p.description}</p>
