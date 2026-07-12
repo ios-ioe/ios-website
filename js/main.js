@@ -365,3 +365,47 @@ document.addEventListener('DOMContentLoaded', () => {
         // Allow submit to proceed for Formspree
     });
 })();
+
+(() => {
+    const form = document.getElementById('join-form');
+    if (!form) return;
+    const status = document.getElementById('join-form-status');
+    function setStatus(msg, isError) {
+        if (!status) return;
+        status.textContent = msg;
+        status.className = isError ? 'form-status form-status--error' : 'form-status form-status--ok';
+        status.setAttribute('aria-live', 'polite');
+    }
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    form.addEventListener('submit', (e) => {
+        const name = form.querySelector('input[name="name"]');
+        const email = form.querySelector('input[name="email"]');
+        const message = form.querySelector('textarea[name="message"]');
+        setStatus('', false);
+        [name, email, message].forEach(el => { if (el) el.classList.remove('input-error'); });
+        if (!name.value.trim()) {
+            name.classList.add('input-error');
+            name.focus();
+            setStatus('Please enter your name.', true);
+            e.preventDefault();
+            return;
+        }
+        if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+            email.classList.add('input-error');
+            email.focus();
+            setStatus('Please provide a valid email address.', true);
+            e.preventDefault();
+            return;
+        }
+        if (!message.value.trim()) {
+            message.classList.add('input-error');
+            message.focus();
+            setStatus('Please tell us why you want to join.', true);
+            e.preventDefault();
+            return;
+        }
+        // Allow submit to proceed for Formspree
+    });
+})();

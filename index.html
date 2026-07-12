@@ -310,6 +310,8 @@
                     <li><a href="#events" class="nav__link">Events</a></li>
                     <li><a href="#team" class="nav__link">Team</a></li>
                     <li><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li><a href="propose.html" class="nav__link">Propose a Project</a></li>
+                    <li><a href="#join" class="nav__link">Join</a></li>
                     <li><a href="#contact" class="nav__link">Contact</a></li>
                     <li>
                         <button type="button" id="chat-toggle-btn" class="nav__terminal-btn" aria-label="Open IOS assistant" aria-expanded="false" aria-controls="chat-window">
@@ -622,6 +624,25 @@
         </section>
 
         <div class="ascii-divider py-8 text-center">------------------------------------------------------------------------------------------------------------------------</div>
+
+        <!--===== JOIN ===== -->
+        <section class="py-16" id="join">
+            <div class="mb-12">
+                <div class="inline-block border border-primary-fixed-dim px-3 py-1 font-label-md text-label-md text-primary-fixed-dim mb-4">08 // JOIN US</div>
+                <h2 class="font-headline-lg text-headline-lg text-on-background">APPLY TO JOIN.</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mt-4">Tell us about yourself. Applications go straight to the president's inbox.</p>
+            </div>
+            <form id="join-form" class="terminal-window p-8" autocomplete="off" action="https://formspree.io/f/YOUR_JOIN_FORM_ID" method="POST">
+                <div id="join-form-status" class="sr-only" aria-live="polite"></div>
+                <input type="text" name="name" placeholder="Full name" class="contact__input" required>
+                <input type="email" name="email" placeholder="Email" class="contact__input" required>
+                <input type="text" name="faculty_or_role" placeholder="Faculty / Year / Role" class="contact__input">
+                <input type="text" name="interest_area" placeholder="Area of interest (e.g. ML, Web, Design)" class="contact__input">
+                <textarea name="message" cols="0" rows="6" placeholder="Why do you want to join IOS?" class="contact__input" required></textarea>
+                <input type="hidden" name="_subject" value="New IOS Join Application">
+                <button type="submit" class="contact__button button" id="join-send-button">Apply</button>
+            </form>
+        </section>
 
         <!--===== CONTACT ===== -->
         <section class="py-16" id="contact">
